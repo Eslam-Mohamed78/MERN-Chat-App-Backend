@@ -1,4 +1,3 @@
-import cors from "cors";
 import morgan from "morgan";
 import connectDB from "./../DB/connection.js";
 import authRouter from "./modules/auth/auth.router.js";
@@ -14,12 +13,9 @@ const appRouter = (app, express, server) => {
   }
 
   // socket
-  connectSocket(server)
+  connectSocket(server);
 
   connectDB();
-
-  // allow access from all origins (urls)
-  app.use(cors());
 
   // parse the buffer data
   app.use(express.json());
@@ -31,7 +27,7 @@ const appRouter = (app, express, server) => {
 
   app.use("/chat", chatRouter);
 
-  app.use("/message", messageRouter)
+  app.use("/message", messageRouter);
 
   app.all("*", (req, res, next) => {
     return next(new Error("Page not found!", { cause: 404 }));

@@ -10,6 +10,8 @@ const port = process.env.PORT || 5000;
 
 appRouter(app, express);
 
+app.get("/", (req, res)=> res.send({message: "working successfully"}))
+
 const server = app.listen(port, () => {
   console.log(`Server running on port ${port}!`.yellow.bold);
 });

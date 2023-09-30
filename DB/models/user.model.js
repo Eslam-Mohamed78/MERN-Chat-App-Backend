@@ -10,7 +10,7 @@ const userSchema = new Schema(
       url: {
         type: String,
         default:
-          "https://res.cloudinary.com/dayeympjm/image/upload/v1695221506/mern-chat-app/kv8maxp3jzvd70ix8ry0.jpg",
+          "https://res.cloudinary.com/dayeympjm/image/upload/v1695221506/mern-chat-app/defaultProfilePicture.jpg",
       },
       id: {
         type: String,

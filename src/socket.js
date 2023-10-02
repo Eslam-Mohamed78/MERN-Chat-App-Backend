@@ -6,23 +6,28 @@ const connectSocket = (server) => {
 
   // make socket connection
   io.on("connection", (socket) => {
-    // console.log("connected to socketId:", socket.id);
+    // make room for each user to send message to him
+    socket.on("userRoom", (userId)=> {
+      socket.join(userId)
+    })
 
-    // when user click chat he will join room chat
-    // between him and other user (join is server only concept)
+    // make room for each chat
     socket.on("join chat", (roomId) => {
       socket.join(roomId);
-      console.log("user joined room:", roomId);
+      console.log(`user: ${socket.id} joined room: ${roomId}`);
     });
 
     // recieve message
     socket.on("newMessage", (chat) => {
       // data
       const roomId = chat.chatId._id;
-      console.log(roomId);
 
-      // send the message to all room members
-      socket.in(roomId).emit("recieveMessage", chat);
+      chat.chatId.users?.map((user) => {
+        if (user._id === chat.sender._id) return;
+
+        // send the message to a specific user each time
+        socket.in(user._id).emit("recieveMessage", chat);
+      });
     });
   });
 };
